@@ -112,6 +112,7 @@ fun AlignYourBodyRow(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
         modifier = modifier
     ) {
         items(alignYourBodyData) { item ->
