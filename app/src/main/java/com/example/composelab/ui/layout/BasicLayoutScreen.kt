@@ -31,6 +31,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -46,6 +47,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composelab.R
 import com.example.composelab.ui.theme.ComposeLabTheme
+
+@Composable
+fun MySootheAppPortrait() {
+    ComposeLabTheme {
+        Scaffold(
+            bottomBar = { LayoutBottomNavigation() }
+        ) { padding ->
+            HomeScreen(Modifier.padding(padding))
+        }
+    }
+}
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
@@ -259,6 +271,14 @@ private data class DrawableStringPair(
     @DrawableRes val drawable: Int,
     @StringRes val text: Int
 )
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun MySootheAppPortraitPreview() {
+    ComposeLabTheme {
+        MySootheAppPortrait()
+    }
+}
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE, heightDp = 180)
 @Composable
