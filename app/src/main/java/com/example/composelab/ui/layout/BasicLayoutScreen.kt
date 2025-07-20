@@ -41,6 +41,24 @@ import com.example.composelab.R
 import com.example.composelab.ui.theme.ComposeLabTheme
 
 @Composable
+fun HomeSection(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Column(modifier) {
+        Text(
+            stringResource(title),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
+}
+
+@Composable
 fun SearchBar(
     modifier: Modifier = Modifier
 ) {
@@ -175,6 +193,16 @@ private data class DrawableStringPair(
     @DrawableRes val drawable: Int,
     @StringRes val text: Int
 )
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun HomeSectionPreview() {
+    ComposeLabTheme {
+        HomeSection(R.string.align_your_body) {
+            AlignYourBodyRow()
+        }
+    }
+}
 
 @Preview
 @Composable
