@@ -10,6 +10,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,7 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -56,18 +56,20 @@ class MainActivity : ComponentActivity() {
 fun MyApp(modifier: Modifier = Modifier) {
     var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
 
-    Scaffold { innerPadding ->
-        Surface(
-            modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            if (shouldShowOnboarding) {
-                OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
-            } else {
-                Greetings()
-            }
+    Scaffold(
+        modifier = modifier.fillMaxSize()
+    ) { innerPadding ->
+        if (shouldShowOnboarding) {
+            OnboardingScreen(
+                onContinueClicked = { shouldShowOnboarding = false },
+                modifier = Modifier,
+                contentPadding = innerPadding
+            )
+        } else {
+            Greetings(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = innerPadding
+            )
         }
     }
 }
@@ -75,10 +77,14 @@ fun MyApp(modifier: Modifier = Modifier) {
 @Composable
 fun OnboardingScreen(
     onContinueClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(contentPadding)
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -95,11 +101,12 @@ fun OnboardingScreen(
 @Composable
 private fun Greetings(
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     names: List<String> = List(20) { "$it" }
 ) {
     LazyColumn(
-        modifier = modifier
-            .padding(vertical = 4.dp)
+        modifier = modifier,
+        contentPadding = contentPadding
     ) {
         items(items = names) { name ->
             Greeting(name = name)
@@ -170,7 +177,6 @@ private fun CardContent(name: String) {
     uiMode = UI_MODE_NIGHT_YES,
     name = "GreetingPreviewDark"
 )
-
 @Preview(showBackground = true, widthDp = 320)
 @Composable
 fun GreetingPreview() {
